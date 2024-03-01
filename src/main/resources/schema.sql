@@ -1,0 +1,64 @@
+CREATE TABLE IF NOT EXISTS categories (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(50) NOT NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+
+CREATE TABLE IF NOT EXISTS  restaurants (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(50) NOT NULL,  
+     image VARCHAR(255),
+     description TEXT NOT NULL,
+     lowest_price INT NOT NULL,
+     highest_price INT NOT NULL,
+     postal_code VARCHAR(50) NOT NULL,
+     address VARCHAR(255) NOT NULL,
+     access VARCHAR(255) NOT NULL,
+     opening_time TIME NOT NULL,
+     closing_time TIME NOT NULL,
+     phone_number VARCHAR(50) NOT NULL,
+     seating_capacity INT NOT NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+ 
+CREATE TABLE IF NOT EXISTS category_restaurant (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     restaurant_id INT NOT NULL,
+     category_id INT NOT NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     FOREIGN KEY (restaurant_id) REFERENCES restaurants (id),
+     FOREIGN KEY (category_id) REFERENCES categories (id)
+ );
+ 
+ CREATE TABLE IF NOT EXISTS regular_holidays (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     day VARCHAR(255) NOT NULL, 
+     day_index INT NOT NULL, 
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+  
+CREATE TABLE IF NOT EXISTS regular_holiday_restaurant (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     restaurant_id INT NOT NULL,
+     regular_holiday_id INT NOT NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     FOREIGN KEY (restaurant_id) REFERENCES restaurants (id),
+     FOREIGN KEY (regular_holiday_id) REFERENCES regular_holidays (id)
+ );
+ 
+CREATE TABLE IF NOT EXISTS pictures (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    photo_1 VARCHAR(255),
+    photo_2 VARCHAR(255),
+    photo_3 VARCHAR(255),
+    photo_4 VARCHAR(255), 
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants (id)
+);
